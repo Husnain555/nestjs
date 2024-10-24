@@ -1,8 +1,18 @@
 import { Injectable, Param } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.services';
+import { UserDto } from './dto/user.dto';
 @Injectable()
 export class UserService {
-  addUser(): String {
-    return 'user added successfully';
+  constructor(private prisma:PrismaService) {}
+  addUser(userdto:UserDto){
+   return this.prisma.user.create({
+      data:{
+        id:userdto.id,
+        name:userdto.name,
+        email:userdto.email,
+        password:userdto.password
+      }
+    })
   }
   deleteUser (): String {
     return 'user removed successfully';
