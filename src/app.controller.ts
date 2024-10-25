@@ -17,8 +17,8 @@ return     this.UserService.deleteUser()
   updateUser ():String{
     return this.UserService.updateUser()
   }
-  @Get('/get/:id')
-  findAllUser (@Param('id')id:String){
-    return this.UserService.findAllUser(`${id}`)
+  @Get('/get')
+  findAllUser (@Body()userDto:UserDto){
+    return this.UserService.findAllUser(userDto)
   }
 }

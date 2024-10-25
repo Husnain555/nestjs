@@ -20,7 +20,11 @@ export class UserService {
   updateUser():String{
     return 'user updated successfully';
   }
-  findAllUser(@Param('id')id:String):String {
-    return `user ${id} find successfully`;
+  findAllUser(userDto:UserDto) {
+    return this.prisma.user.findMany({
+      where:{
+        id:userDto.id,
+      }
+    })
   }
 }
