@@ -1,10 +1,12 @@
-import { Injectable, Param } from '@nestjs/common';
+import { Injectable, Param, UseFilters } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.services';
 import { UserDto } from './dto/user.dto';
+import { CustomError } from './Errors/custom.error';
 @Injectable()
 export class UserService {
   constructor(private prisma:PrismaService) {}
   addUser(userdto:UserDto){
+    // throw new CustomError
 
    return this.prisma.user.create({
       data:{
