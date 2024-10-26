@@ -9,12 +9,12 @@ export class AppController {
   addUser (@Body()userDto:UserDto){
    return  this.UserService.addUser(userDto)
   }
-  @Delete('/delete:id')
-  deleteUser ():String{
-return     this.UserService.deleteUser()
+  @Delete('/delete/:id',ParseIntPipe)
+  deleteUser (@Param('id')id:string){
+    return this.UserService.deleteUser(id)
   }
   @Put('/update:id')
-  updateUser ():String{
+  updateUser (){
     return this.UserService.updateUser()
   }
   @Get('/get')

@@ -5,6 +5,7 @@ import { UserDto } from './dto/user.dto';
 export class UserService {
   constructor(private prisma:PrismaService) {}
   addUser(userdto:UserDto){
+
    return this.prisma.user.create({
       data:{
         id:userdto.id,
@@ -14,10 +15,19 @@ export class UserService {
       }
     })
   }
-  deleteUser (): String {
-    return 'user removed successfully';
+  deleteUser (@Param('id')id:string){
+    const userId = parseInt(id, 10);
+
+    return this.prisma.user.delete({
+      where:{
+        id: userId
+
+        }
+
+    })
+
   }
-  updateUser():String{
+  updateUser(){
     return 'user updated successfully';
   }
   findAllUser(userDto:UserDto) {
