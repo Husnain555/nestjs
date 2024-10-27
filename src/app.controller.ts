@@ -41,12 +41,14 @@ export class AppController {
     return this.UserService.updateUser()
   }
   @Get('/get/')
+  @UseGuards(AuthGuard('jwt'))
+
   // @UseInterceptors(PostUserInterceptor)
   findAllUser (@Body()userDto:UserDto){
     return this.UserService.findAllUser(userDto)
   }
   @Post('/login')
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(AuthGuard('jwt'))
 
   findUser(@Request() req) {
     const user = req.user;
