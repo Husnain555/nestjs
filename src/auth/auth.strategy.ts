@@ -11,9 +11,10 @@ export class AuthStrategy extends PassportStrategy(Strategy, 'local') {
   }
 
   async validate(username: string, password: string): Promise<UserDto> {
+    console.log(username,password);
+
     const user = await this.userService.findUser({username,password});
   // const   username = user.name
-
 
     if (user && user.password === password && user.name === username) {
       return user;
