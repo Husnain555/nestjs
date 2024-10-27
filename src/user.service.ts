@@ -1,42 +1,51 @@
-import { Injectable, Param, UseFilters } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.services';
 import { UserDto } from './dto/user.dto';
-import { CustomError } from './Errors/custom.error';
+
 @Injectable()
 export class UserService {
-  constructor(private prisma:PrismaService) {}
-  addUser(userdto:UserDto){
-    // throw new CustomError
+  constructor(private prisma: PrismaService) {}
 
-   return this.prisma.user.create({
-      data:{
-        id:userdto.id,
-        name:userdto.name,
-        email:userdto.email,
-        password:userdto.password
-      }
-    })
+  addUser(userdto: UserDto) {
+    // throw new CustomError
+    return this.prisma.user.create({
+      data: {
+        id: userdto.id,
+        name: userdto.name,
+        email: userdto.email,
+        password: userdto.password,
+      },
+    });
   }
-  deleteUser (@Param('id')id:string){
+
+  findUser({username,password}:{username:string,password:string}) {
+    return this.prisma.user.findFirst({
+      where: {
+        name: username,
+        password: password,
+      },
+    });
+  }
+
+  deleteUser(id: string) {
     const userId = parseInt(id, 10);
 
     return this.prisma.user.delete({
-      where:{
-        id: userId
-
-        }
-
-    })
-
+      where: {
+        id: userId,
+      },
+    });
   }
-  updateUser(){
-    return 'user updated successfully';
+
+  updateUser() {
+    return 'User updated successfully';
   }
-  findAllUser(userDto:UserDto) {
+
+  findAllUser(userDto: UserDto) {
     return this.prisma.user.findMany({
-      where:{
-        id:userDto.id,
-      }
-    })
+      where: {
+        id: userDto.id,
+      },
+    });
   }
 }

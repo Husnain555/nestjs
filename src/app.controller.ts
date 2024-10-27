@@ -17,14 +17,15 @@ import { CustomExceptionFilter } from './Errors/custom.exception.fillter';
 import { Guard } from './Guard/guard.user';
 import { UserInterseptor } from './interseptor/user.interseptor';
 import { PostUserInterceptor } from './interseptor/post.user.interseptor';
+import { AuthGuard } from '@nestjs/passport';
 @Controller('user')
-@UseFilters(CustomExceptionFilter)
-@UseInterceptors(UserInterseptor)
+// @UseFilters(CustomExceptionFilter)
+// @UseInterceptors(UserInterseptor)
+@UseGuards(AuthGuard('local'))
 export class AppController {
   constructor(private readonly UserService: UserService) {
   }
   @Post('/add')
-  @UseGuards(new Guard())
   addUser (@Body()userDto:UserDto){
    return  this.UserService.addUser(userDto)
   }
@@ -41,5 +42,9 @@ export class AppController {
   // @UseInterceptors(PostUserInterceptor)
   findAllUser (@Body()userDto:UserDto){
     return this.UserService.findAllUser(userDto)
+  }
+  @Post('/login')
+  findUser(user:UserDto) {
+    return user;
   }
 }
