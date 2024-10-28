@@ -41,9 +41,7 @@ export class AppController {
     return this.UserService.updateUser()
   }
   @Get('/get/')
-  @UseGuards(AuthGuard('jwt'))
 
-  // @UseInterceptors(PostUserInterceptor)
   findAllUser (@Body()userDto:UserDto){
     return this.UserService.findAllUser(userDto)
   }
@@ -54,7 +52,6 @@ export class AppController {
     const user = req.user;
     console.log('Authenticated user:', user);
 
-    // Pass the user object to generateToken
     return this.authService.generateToken(user);
   }
 }

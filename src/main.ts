@@ -17,13 +17,28 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, documentFactory);
   app.enableCors();
   const GlobalMiddleware = (req:Request,res:Response,next:NextFunction)=>{
+    const page = Date.now()
+    const timespend = Date.now()- page
     const protocol = req.protocol
     const host = res.get('host')
     const url = req.url;
     const time = req.query.time;
     const method = req.method
     const date = new Date().toString();
-    console.log(protocol, host, url, method, date, time);
+    const devive = req.headers
+    const ip = req.ip === '::1' ? '127.0.0.1' : (req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress);
+    const axios = require('axios');
+
+ axios.get('https://geolocation-db.com/json/2cdcf500-85f3-11ef-8820-ffaffd3cd2a3')
+      .then(response => {
+        const locationData = response.data;
+        console.log(locationData);
+      })
+      .catch(error => {
+        console.error('Error fetching location:', error);
+      });
+
+    console.log( date );
 
 
     next();
